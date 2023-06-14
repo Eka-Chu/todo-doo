@@ -50,10 +50,14 @@ const Todo: React.FC<TodoProps> = ({ todo, onDelete, onSave, onToggle }) => {
         </div>
       ) : (
         <div>
+          <input
+            type="checkbox"
+            checked={completed}
+            onChange={handleToggle}
+          />
           <span style={{ textDecoration: completed ? 'line-through' : 'none' }}>
             {todo.title}
           </span>
-          <button onClick={handleToggle}>Toggle</button>
           <button onClick={handleDelete}>Delete</button>
           <button onClick={handleEdit}>Edit</button>
         </div>
@@ -71,15 +75,17 @@ export default Todo;
 //   todo: TodoModel;
 //   onDelete: (id: string) => void;
 //   onSave: (id: string, title: string) => void;
+//   onToggle: (id: string) => void;
 // }
 
-// const Todo: React.FC<TodoProps> = ({ todo, onDelete, onSave }) => {
+// const Todo: React.FC<TodoProps> = ({ todo, onDelete, onSave, onToggle }) => {
 //   const [completed, setCompleted] = useState(todo.completed);
 //   const [editing, setEditing] = useState(false);
 //   const [editedTitle, setEditedTitle] = useState(todo.title);
 
 //   const handleToggle = () => {
 //     setCompleted(!completed);
+//     onToggle(todo.id);
 //   };
 
 //   const handleDelete = () => {
@@ -117,7 +123,11 @@ export default Todo;
 //           <span style={{ textDecoration: completed ? 'line-through' : 'none' }}>
 //             {todo.title}
 //           </span>
-//           <button onClick={handleToggle}>Toggle</button>
+//           <input
+//             type="checkbox"
+//             checked={completed}
+//             onChange={handleToggle}
+//           />
 //           <button onClick={handleDelete}>Delete</button>
 //           <button onClick={handleEdit}>Edit</button>
 //         </div>

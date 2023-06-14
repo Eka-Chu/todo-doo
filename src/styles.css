@@ -1,0 +1,15 @@
+.active-filter {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .active-filter.active {
+    background-color: #555;
+    color: #fff;
+  }
+  

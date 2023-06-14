@@ -1,50 +1,3 @@
-// import React, { useState } from 'react';
-// import Header from './components/Header';
-// import TodoList from './components/TodoList';
-// import TaskCounter from './components/TaskCounter';
-// import TodoModel from './models/TodoModel';
-// import { mockData } from './mockData';
-// import AddTodo from './components/AddTodo';
-
-// const App: React.FC = () => {
-//   const [todos, setTodos] = useState<TodoModel[]>(mockData);
-
-//   const handleDeleteTodo = (id: string) => {
-//     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-//   };
-
-//   const handleAddTodo = (title: string) => {
-//     const newTodo: TodoModel = {
-//       id: Math.random().toString(),
-//       title: title,
-//       completed: false,
-//     };
-
-//     setTodos((prevTodos) => [...prevTodos, newTodo]);
-//   };
-
-//   const handleSave = (id: string, title: string) => {
-//     setTodos((prevTodos) =>
-//       prevTodos.map((todo) =>
-//         todo.id === id ? { ...todo, title: title } : todo
-//       )
-//     );
-//   };
-
-//   const completedCount = todos.filter((todo) => todo.completed).length;
-
-//   return (
-//     <div>
-//       <Header />
-//       <AddTodo onAdd={handleAddTodo} />
-//       <TodoList todos={todos} onDelete={handleDeleteTodo} onSave={handleSave} />
-//       <TaskCounter todos={todos} completedCount={completedCount} />
-//     </div>
-//   );
-// };
-
-// export default App;
-
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import TodoList from './components/TodoList';
@@ -52,6 +5,7 @@ import TaskCounter from './components/TaskCounter';
 import TodoModel from './models/TodoModel';
 import { mockData } from './mockData';
 import AddTodo from './components/AddTodo';
+import './styles.css';
 
 enum Filter {
   All = 'all',
@@ -144,13 +98,22 @@ const App: React.FC = () => {
       <Header />
       <AddTodo onAdd={handleAddTodo} />
       <div>
-        <button onClick={() => handleFilterChange(Filter.All)}>
+        <button
+          onClick={() => handleFilterChange(Filter.All)}
+          className={filter === Filter.All ? 'active-filter' : ''}
+        >
           Show All Tasks
         </button>
-        <button onClick={() => handleFilterChange(Filter.Active)}>
+        <button
+          onClick={() => handleFilterChange(Filter.Active)}
+          className={filter === Filter.Active ? 'active-filter' : ''}
+        >
           Show Active Tasks
         </button>
-        <button onClick={() => handleFilterChange(Filter.Completed)}>
+        <button
+          onClick={() => handleFilterChange(Filter.Completed)}
+          className={filter === Filter.Completed ? 'active-filter' : ''}
+        >
           Show Completed Tasks
         </button>
       </div>
