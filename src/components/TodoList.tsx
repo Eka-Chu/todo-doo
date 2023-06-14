@@ -5,13 +5,14 @@ import Todo from './Todo';
 interface TodoListProps {
   todos: TodoModel[];
   onDelete: (id: string) => void;
+  onSave: (id: string, title: string) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos, onDelete }) => {
+const TodoList: React.FC<TodoListProps> = ({ todos, onDelete, onSave }) => {
   return (
     <div>
       {todos.map((todo) => (
-        <Todo key={todo.id} todo={todo} onDelete={onDelete} />
+        <Todo key={todo.id} todo={todo} onDelete={onDelete} onSave={onSave} />
       ))}
     </div>
   );

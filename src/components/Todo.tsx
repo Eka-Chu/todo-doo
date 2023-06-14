@@ -4,9 +4,10 @@ import TodoModel from '../models/TodoModel';
 interface TodoProps {
   todo: TodoModel;
   onDelete: (id: string) => void;
+  onSave: (id: string, title: string) => void;
 }
 
-const Todo: React.FC<TodoProps> = ({ todo, onDelete }) => {
+const Todo: React.FC<TodoProps> = ({ todo, onDelete, onSave }) => {
   const [completed, setCompleted] = useState(todo.completed);
   const [editing, setEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(todo.title);
@@ -20,18 +21,17 @@ const Todo: React.FC<TodoProps> = ({ todo, onDelete }) => {
   };
 
   const handleEdit = () => {
-    setEditing(true);
+    setEditing(!editing);
   };
 
   const handleSave = () => {
-    // Сохраните измененное название задачи
-    // Переключите режим редактирования в false
+    onSave(todo.id, editedTitle);
+    setEditing(false);
   };
 
   const handleCancel = () => {
-    // Отмените редактирование задачи
-    // Верните название задачи в исходное состояние
-    // Переключите режим редактирования в false
+    setEditing(false);
+    setEditedTitle(todo.title);
   };
 
   return (

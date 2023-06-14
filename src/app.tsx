@@ -23,16 +23,25 @@ const App: React.FC = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
+  const handleSave = (id: string, title: string) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, title: title } : todo
+      )
+    );
+  };
+
   const completedCount = todos.filter((todo) => todo.completed).length;
 
   return (
     <div>
       <Header />
       <AddTodo onAdd={handleAddTodo} />
-      <TodoList todos={todos} onDelete={handleDeleteTodo} />
+      <TodoList todos={todos} onDelete={handleDeleteTodo} onSave={handleSave} />
       <TaskCounter todos={todos} completedCount={completedCount} />
     </div>
   );
 };
 
 export default App;
+
