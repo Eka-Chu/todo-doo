@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import Header from './components/Header';
 import TodoList from './components/TodoList';
 import TaskCounter from './components/TaskCounter';
@@ -13,16 +14,43 @@ enum Filter {
   Completed = 'completed',
 }
 
+const Container = styled.div`
+  text-align: center;
+  background-color: rgb(51, 51, 51);
+  height: 100vh;
+  padding: 20px;
+`;
+
+
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+const FilterButton = styled.button`
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: #000;
+  cursor: pointer;
+
+  &.active {
+    background-color: #555;
+    color: #fff;
+  }
+`;
+
 const App: React.FC = () => {
   const [todos, setTodos] = useState<TodoModel[]>([]);
   const [filter, setFilter] = useState<Filter>(Filter.All);
 
-  // Метод для сохранения todos в локальное хранилище
   const saveTodosToLocalStorage = (todos: TodoModel[]) => {
     localStorage.setItem('todos', JSON.stringify(todos));
   };
 
-  // Метод для чтения todos из локального хранилища
   const getTodosFromLocalStorage = (): TodoModel[] => {
     const storedTodos = localStorage.getItem('todos');
     if (storedTodos) {
@@ -32,10 +60,8 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // Получаем todos из локального хранилища при загрузке приложения
     const storedTodos = getTodosFromLocalStorage();
     if (storedTodos.length === 0) {
-      // Если в локальном хранилище нет сохраненных данных, используем моковые данные
       saveTodosToLocalStorage(mockData);
       setTodos(mockData);
     } else {
@@ -44,7 +70,6 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Сохраняем todos в локальное хранилище при каждом их изменении
     saveTodosToLocalStorage(todos);
   }, [todos]);
 
@@ -78,8 +103,8 @@ const App: React.FC = () => {
     );
   };
 
-  const handleFilterChange = (filter: Filter) => {
-    setFilter(filter);
+  const handleFilterChange = (selectedFilter: Filter) => {
+    setFilter(selectedFilter);
   };
 
   const filteredTodos = todos.filter((todo) => {
@@ -94,29 +119,29 @@ const App: React.FC = () => {
   const completedCount = todos.filter((todo) => todo.completed).length;
 
   return (
-    <div>
+    <Container>
       <Header />
       <AddTodo onAdd={handleAddTodo} />
-      <div>
-        <button
+      <FilterContainer>
+        <FilterButton
           onClick={() => handleFilterChange(Filter.All)}
-          className={filter === Filter.All ? 'active-filter' : ''}
+          className={filter === Filter.All ? 'active' : ''}
         >
           Show All Tasks
-        </button>
-        <button
+        </FilterButton>
+        <FilterButton
           onClick={() => handleFilterChange(Filter.Active)}
-          className={filter === Filter.Active ? 'active-filter' : ''}
+          className={filter === Filter.Active ? 'active' : ''}
         >
           Show Active Tasks
-        </button>
-        <button
+        </FilterButton>
+        <FilterButton
           onClick={() => handleFilterChange(Filter.Completed)}
-          className={filter === Filter.Completed ? 'active-filter' : ''}
+          className={filter === Filter.Completed ? 'active' : ''}
         >
           Show Completed Tasks
-        </button>
-      </div>
+        </FilterButton>
+      </FilterContainer>
       <TodoList
         todos={filteredTodos}
         onDelete={handleDeleteTodo}
@@ -124,7 +149,7 @@ const App: React.FC = () => {
         onToggle={handleToggle}
       />
       <TaskCounter todos={todos} completedCount={completedCount} />
-    </div>
+    </Container>
   );
 };
 

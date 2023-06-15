@@ -1,15 +1,31 @@
-.active-filter {
-    margin-right: 10px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ccc;
-    color: #000;
-    cursor: pointer;
-  }
-  
-  .active-filter.active {
-    background-color: #555;
-    color: #fff;
-  }
-  
+.container {
+  text-align: center;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.filter-button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: #000;
+  cursor: pointer;
+}
+
+.filter-button.active {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #ccc;
+}
+
+.active {
+  background-color: #555;
+  color: #fff;
+  border: 1px solid #ccc;
+}

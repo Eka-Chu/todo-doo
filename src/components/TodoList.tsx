@@ -1,6 +1,11 @@
+// TodoList.tsx
+
 import React from 'react';
 import TodoModel from '../models/TodoModel';
 import Todo from './Todo';
+import { TodoItem, TodoTitle, TodoCheckbox, TodoButton } from './Todo.styles';
+import { TodoListContainer } from './TodoList.styles';
+
 
 interface TodoListProps {
   todos: TodoModel[];
@@ -11,7 +16,7 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ todos, onDelete, onSave, onToggle }) => {
   return (
-    <div>
+    <TodoListContainer>
       {todos.map((todo) => (
         <Todo
           key={todo.id}
@@ -21,11 +26,12 @@ const TodoList: React.FC<TodoListProps> = ({ todos, onDelete, onSave, onToggle }
           onToggle={onToggle}
         />
       ))}
-    </div>
+    </TodoListContainer>
   );
 };
 
 export default TodoList;
+
 
 // import React from 'react';
 // import TodoModel from '../models/TodoModel';

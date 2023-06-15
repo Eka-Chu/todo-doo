@@ -1,5 +1,6 @@
 import React from 'react';
-import TodoModel from '../models/TodoModel'; // Импортируйте тип TodoModel из файла TodoModel.ts
+import TodoModel from '../models/TodoModel';
+import { TaskCounterContainer } from './TaskCounter.styles';
 
 interface TaskCounterProps {
   todos: TodoModel[];
@@ -8,10 +9,10 @@ interface TaskCounterProps {
 
 const TaskCounter: React.FC<TaskCounterProps> = ({ todos, completedCount }) => {
   return (
-    <div>
+    <TaskCounterContainer>
       <p>Total tasks: {todos.length}</p>
       <p>Completed tasks: {completedCount}</p>
-    </div>
+    </TaskCounterContainer>
   );
 };
 
