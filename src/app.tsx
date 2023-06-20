@@ -8,12 +8,14 @@ import { mockData } from './mockData';
 import AddTodo from './components/AddTodo';
 import './styles.css';
 
+// Определение перечисления для фильтрации задач
 enum Filter {
   All = 'all',
   Active = 'active',
   Completed = 'completed',
 }
 
+// Стилизованный контейнер для всего приложения
 const Container = styled.div`
   text-align: center;
   background-color: rgb(51, 51, 51);
@@ -21,13 +23,14 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-
+// Стилизованный контейнер для фильтров
 const FilterContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
 
+// Стилизованная кнопка фильтра
 const FilterButton = styled.button`
   margin-right: 10px;
   padding: 5px 10px;
@@ -44,13 +47,17 @@ const FilterButton = styled.button`
 `;
 
 const App: React.FC = () => {
+  // Состояние для хранения списка задач
   const [todos, setTodos] = useState<TodoModel[]>([]);
+  // Состояние для хранения выбранного фильтра
   const [filter, setFilter] = useState<Filter>(Filter.All);
 
+  // Функция для сохранения задач в локальное хранилище
   const saveTodosToLocalStorage = (todos: TodoModel[]) => {
     localStorage.setItem('todos', JSON.stringify(todos));
   };
 
+  // Функция для получения задач из локального хранилища
   const getTodosFromLocalStorage = (): TodoModel[] => {
     const storedTodos = localStorage.getItem('todos');
     if (storedTodos) {
@@ -59,6 +66,7 @@ const App: React.FC = () => {
     return [];
   };
 
+  // Загрузка задач из локального хранилища при монтировании компонента
   useEffect(() => {
     const storedTodos = getTodosFromLocalStorage();
     if (storedTodos.length === 0) {
@@ -69,14 +77,17 @@ const App: React.FC = () => {
     }
   }, []);
 
+  // Сохранение задач в локальное хранилище при изменении состояния списка задач
   useEffect(() => {
     saveTodosToLocalStorage(todos);
   }, [todos]);
 
+  // Обработчик удаления задачи
   const handleDeleteTodo = (id: string) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
+  // Обработчик добавления новой задачи
   const handleAddTodo = (title: string) => {
     const newTodo: TodoModel = {
       id: Math.random().toString(),
@@ -87,6 +98,7 @@ const App: React.FC = () => {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
+  // Обработчик сохранения изменений в задаче
   const handleSave = (id: string, title: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -95,6 +107,7 @@ const App: React.FC = () => {
     );
   };
 
+  // Обработчик переключения статуса выполнения задачи
   const handleToggle = (id: string) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
@@ -103,10 +116,12 @@ const App: React.FC = () => {
     );
   };
 
+  // Обработчик изменения выбранного фильтра
   const handleFilterChange = (selectedFilter: Filter) => {
     setFilter(selectedFilter);
   };
 
+  // Фильтрация задач в соответствии с выбранным фильтром
   const filteredTodos = todos.filter((todo) => {
     if (filter === Filter.Active) {
       return !todo.completed;
@@ -116,6 +131,7 @@ const App: React.FC = () => {
     return true;
   });
 
+  // Подсчет количества завершенных задач
   const completedCount = todos.filter((todo) => todo.completed).length;
 
   return (
