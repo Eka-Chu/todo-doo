@@ -4,8 +4,9 @@ import {
   TodoItem,
   TodoCheckbox,
   TodoTitle,
-  TodoButton
+  TodoButton,
 } from './Todo.styles';
+
 
 interface TodoProps {
   todo: TodoModel; // Пропс с информацией о задаче
@@ -29,51 +30,62 @@ const Todo: React.FC<TodoProps> = ({ todo, onDelete, onSave, onToggle }) => {
   };
 
   const handleEdit = () => {
-    setEditing(!editing); // Изменение состояния редактирования задачи
+    setEditing(true); // Включение режима редактирования задачи
   };
 
   const handleSave = () => {
     onSave(todo.id, editedTitle); // Вызов функции сохранения изменений в задаче
-    setEditing(false); // Завершение режима редактирования
+    setEditing(false); // Выключение режима редактирования задачи
   };
 
   const handleCancel = () => {
-    setEditing(false); // Отмена режима редактирования
+    setEditing(false); // Отмена режима редактирования задачи
     setEditedTitle(todo.title); // Восстановление оригинального заголовка задачи
   };
 
   return (
     <TodoItem>
-      <div>
-        <TodoCheckbox
-          type="checkbox"
-          checked={completed} // Отображение состояния завершенности задачи
-          onChange={handleToggle} // Обработчик переключения состояния задачи
-        />
-        <TodoTitle completed={completed} onClick={handleToggle}>
-          {todo.title} 
-        </TodoTitle>
-      </div>
-      <div>
-        {editing ? ( // Если в режиме редактирования
+      {editing ? (
+        // Если в режиме редактирования
+        <div>
+       <input
+  type="text"
+  value={editedTitle}
+  onChange={(e) => setEditedTitle(e.target.value)}
+  style={{
+    width: '100%',
+    padding: '8px',
+    marginBottom: '8px',
+    borderRadius: '10px',
+  }}
+/>
+
           <div>
-            <input
-              type="text"
-              value={editedTitle} // Значение измененного заголовка
-              onChange={(e) => setEditedTitle(e.target.value)} // Обработчик изменения заголовка
+            <TodoButton onClick={handleSave}>Save</TodoButton>
+            <TodoButton onClick={handleCancel}>Cancel</TodoButton>
+          </div>
+        </div>
+      ) : (
+        // Если не в режиме редактирования
+        <div>
+          <div>
+            <TodoCheckbox
+              type="checkbox"
+              checked={completed} // Отображение состояния завершенности задачи
+              onChange={handleToggle} // Обработчик переключения состояния задачи
             />
-            <TodoButton onClick={handleSave}>Save</TodoButton> 
-            <TodoButton onClick={handleCancel}>Cancel</TodoButton> 
+            <TodoTitle completed={completed} onClick={handleToggle}>
+              {todo.title}
+            </TodoTitle>
           </div>
-        ) : ( // Если не в режиме редактирования
           <div>
-            <TodoButton onClick={handleDelete}>Delete</TodoButton> 
-            <TodoButton onClick={handleEdit}>Edit</TodoButton> 
+            <TodoButton onClick={handleDelete}>Delete</TodoButton>
+            <TodoButton onClick={handleEdit}>Edit</TodoButton>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </TodoItem>
   );
 };
 
-export default Todo; 
+export default Todo;
